@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>text</title>
+    <style>
+        * {
+            margin: 0;
+        }
+    </style>
+    <script src="../js/three.js"></script>
+</head>
+
+<body>
+    <script>
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        var camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 10000);
+        camera.position.set(0, 1000, 0);
+        camera.lookAt(0, 0, 0);
+
+        var scene = new THREE.Scene()
+
+        // 定义一个材质
+        var material = new THREE.LineBasicMaterial({
+            color: 0xffffff,
+            opacity: 0.2
+        })
+
+        // 创建一个几何体
+        var geometry = new THREE.Geometry()
+        geometry.vertices.push(new THREE.Vector3(-500, 0, 0))
+        geometry.vertices.push(new THREE.Vector3(500, 0, 0))
+
+        for (var i = 0; i <= 20; i++) {
+            var line = new THREE.Line(geometry, material);
+            line.position.z = (i * 50) - 500;
+            scene.add(line);
+
+            var line = new THREE.Line(geometry, material);
+            line.position.x = (i * 50) - 500;
+            line.rotation.y = 90 * Math.PI / 180;
+            scene.add(line);
+        }
+    </script>
+</body>
+
+</html>
