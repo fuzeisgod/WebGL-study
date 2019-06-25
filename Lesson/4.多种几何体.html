@@ -5,29 +5,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>旋转</title>
+    <title>多种几何体</title>
     <style>
         body {
             margin: 0;
             overflow: hidden;
         }
-
-        #info {
-            position: absolute;
-        }
     </style>
     <script src="../js/three.js"></script>
+    <script src="../js/OrbitControls.js"></script>
 </head>
 
 <body>
-    <!-- 显示刷新率 -->
-    <div id="info"></div>
     <script>
         // 创建场景对象
         var scene = new THREE.Scene();
         // 创建网格模型
         // var geometry = new THREE.SphereGeometry(60, 40, 40); // 创建一个球体对象
-        var geometry = new THREE.BoxGeometry(100, 100, 100); // 创建一个立方体几何对象
+        // var geometry = new THREE.BoxGeometry(100, 100, 100); // 创建一个立方体几何对象
+        // var geometry = new THREE.CylinderGeometry(50, 50, 100, 25); // 创建一个圆柱
+        var geometry = new THREE.OctahedronGeometry(50); // 正八面体
+        // var geometry = new THREE.DodecahedronGeometry(50); // 正十二面体
+        // var geometry = new THREE.IcosahedronGeometry(50); // 正二十面体
+
         // 材质对象material
         var material = new THREE.MeshLambertMaterial({
             color: 0x00ffff
@@ -71,30 +71,18 @@
         // body 元素中插入canvas对象
         document.body.appendChild(renderer.domElement);
 
-        let T0 = new Date(); // 上次时间    
-        var n = 0;
-        var info = document.getElementById("info");
-
         function render() {
-            // 进行循环计算，占用CPU计算资源，延迟时间
-            // for (var i = 0; i < 10000; i++) {
-            //     for (var j = 0; j < 1000; j++) {
-            //         n += 1
-            //     }
-            // }
-            let T1 = new Date(); // 本次时间
-            let t = T1 - T0; // 时间差
-            // console.log(Math.round(1000 / t) + 'FPS'); // 实时帧数
-            info.innerText = 'FPS: ' + Math.round(1000 / t)
-            T0 = T1;
             // 指定渲染操作 指定场景，相机作为参数
             renderer.render(scene, camera)
-            mesh.rotateY(0.01) // 每次绕y轴旋转0.01弧度
-            requestAnimationFrame(render); // 请求再次执行渲染函数render，渲染下一帧
+            requestAnimationFrame(render)
         }
+
         render()
-        // 间隔20ms周期性调用函数fun，20ms也就是刷新频率是50FPS
-        // setInterval(render, 20)
+
+        // 创建控件对象，相机对象camera作为参数，控件可以监听鼠标的变化，改变相机对象的属性
+        var controls = new THREE.OrbitControls(camera);
+        // 监听鼠标事件，触发渲染函数，更新canvas画布渲染效果
+        // controls.addEventListener('change', render)
     </script>
 </body>
 
